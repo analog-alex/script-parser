@@ -1,6 +1,6 @@
 use crate::ast::{Script, Scene, ScriptElement};
 use crate::lexer::Token;
-use anyhow::{Result, anyhow};
+use anyhow::Result;
 use std::collections::HashMap;
 
 pub struct Parser {

@@ -13,18 +13,12 @@ pub enum Token {
 
 pub struct Lexer {
     input: String,
-    position: usize,
-    line: usize,
-    column: usize,
 }
 
 impl Lexer {
     pub fn new(input: String) -> Self {
         Lexer {
             input,
-            position: 0,
-            line: 1,
-            column: 1,
         }
     }
 

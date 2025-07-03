@@ -1,7 +1,7 @@
-mod ast;
-mod lexer;
-mod parser;
-mod renderer;
+pub mod ast;
+pub mod lexer;
+pub mod parser;
+pub mod renderer;
 
 use clap::{Arg, Command};
 use std::fs;

@@ -3,6 +3,14 @@ name = "script-parser"
 version = "0.1.0"
 edition = "2024"
 
+[lib]
+name = "script_parser"
+path = "src/lib.rs"
+
+[[bin]]
+name = "script-parser"
+path = "src/main.rs"
+
 [dependencies]
 nom = "7.1"
 regex = "1.10"

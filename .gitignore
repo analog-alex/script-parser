@@ -1,0 +1,33 @@
+/target
+
+.CLAUDE.md
+/.ai-context
+
+# Rust build artifacts
+debug/
+target/
+Cargo.lock
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Backup files
+*.bak
+*.tmp
+*.temp
+
+# Log files
+*.log

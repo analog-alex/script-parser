@@ -11,9 +11,11 @@ use lexer::Lexer;
 use parser::Parser;
 use renderer::PdfRenderer;
 
+use log::{info, debug};
+
 fn main() -> Result<()> {
     let matches = Command::new("script-parser")
-        .version("0.1.0")
+        .version(env!("CARGO_PKG_VERSION"))
         .about("Parses screenplay markdown files and generates PDF output")
         .arg(
             Arg::new("input")
@@ -42,32 +44,33 @@ fn main() -> Result<()> {
     let output_file = matches.get_one::<String>("output").unwrap();
     let validate_only = matches.get_flag("validate-only");
 
-    println!("Reading input file: {}", input_file);
+    info!("Reading input file: {}", input_file);
     let content = fs::read_to_string(input_file)?;
 
-    println!("Tokenizing...");
+    info!("Tokenizing...");
     let mut lexer = Lexer::new(content);
     let tokens = lexer.tokenize();
-    println!("Generated {} tokens", tokens.len());
+    debug!("Generated {} tokens", tokens.len());
 
-    println!("Parsing...");
+    info!("Parsing...");
     let mut parser = Parser::new(tokens);
     let script = parser.parse()?;
 
-    println!("Script parsed successfully!");
-    println!("  - Title section: {}", if script.title_section.is_empty() { "empty" } else { "present" });
-    println!("  - Characters: {}", script.characters.len());
-    println!("  - Scenes: {}", script.scenes.len());
+    debug!("Script parsed successfully! Title section: {}, Characters: {}, Scenes: {}",
+        if script.title_section.is_empty() { "empty" } else { "present" },
+        script.characters.len(),
+        script.scenes.len()
+    );
 
     if validate_only {
-        println!("Validation complete. No PDF generated.");
+        debug!("Validation complete. No PDF generated.");
         return Ok(());
     }
 
-    println!("Generating PDF: {}", output_file);
+    info!("Generating PDF: {}", output_file);
     let renderer = PdfRenderer::new();
     renderer.render(&script, output_file)?;
 
-    println!("PDF generated successfully!");
+    info!("PDF generated successfully!");
     Ok(())
 }

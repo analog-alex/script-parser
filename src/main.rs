@@ -2,6 +2,7 @@ pub mod ast;
 pub mod lexer;
 pub mod parser;
 pub mod renderer;
+pub mod validator;
 
 use clap::{Arg, Command};
 use std::fs;
@@ -10,6 +11,7 @@ use anyhow::Result;
 use lexer::Lexer;
 use parser::Parser;
 use renderer::PdfRenderer;
+use validator::Validator;
 
 use log::{info, debug};
 
@@ -62,8 +64,14 @@ fn main() -> Result<()> {
         script.scenes.len()
     );
 
+    info!("Validating script...");
+    let mut validator = Validator::new();
+    validator.validate(&script)?;
+
+    debug!("Script validation completed successfully!");
+
     if validate_only {
-        debug!("Validation complete. No PDF generated.");
+        info!("Validation complete. No PDF generated.");
         return Ok(());
     }
 
